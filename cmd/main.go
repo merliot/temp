@@ -12,7 +12,7 @@ import (
 
 var (
 	id           = dean.GetEnv("ID", "temp01")
-	name         = dean.GetEnv("NAME", "Temperature/Humidity")
+	name         = dean.GetEnv("NAME", "Temp/Humidity")
 	deployParams = dean.GetEnv("DEPLOY_PARAMS", "target=nano-rp2040&gpio=D2")
 	wsScheme     = dean.GetEnv("WS_SCHEME", "ws://")
 	port         = dean.GetEnv("PORT", "8000")

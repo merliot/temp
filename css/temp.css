@@ -1,0 +1,36 @@
+.readings {
+	justify-content: space-evenly;
+}
+
+.tile .readings {
+	font-size: small;
+}
+
+.reading {
+	align-items: baseline;
+}
+
+#temp,#hum {
+	font-size: xxx-large;
+}
+
+.tile #temp, .tile #hum {
+	font-size: xx-large;
+}
+
+.box {
+	border-radius: 10px;
+	padding: 10px;
+	background: #e9e9af;
+	border-style: inset;
+}
+
+.tile .box {
+	background: transparent;
+	border-style: none;
+	justify-content: space-between;
+}
+
+.tile-body {
+	background: #e9e9af;
+}

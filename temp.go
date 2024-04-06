@@ -1,6 +1,7 @@
 package temp
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -24,7 +25,7 @@ type MsgUpdate struct {
 }
 
 func New(id, model, name string) dean.Thinger {
-	println("NEW TEMP")
+	fmt.Println("NEW TEMP")
 	return &Temp{
 		Device: device.New(id, model, name, fs, targets).(*device.Device),
 	}

@@ -4,5 +4,5 @@ package temp
 
 import "embed"
 
-//go:embed css js template
+//go:embed css go.mod js template
 var fs embed.FS

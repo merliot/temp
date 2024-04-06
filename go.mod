@@ -3,8 +3,8 @@ module github.com/merliot/temp
 go 1.22.0
 
 require (
-	github.com/merliot/dean v0.0.0-20240402190137-e848a3980531
-	github.com/merliot/device v0.0.0-20240403222653-de1854d2cedb
+	github.com/merliot/dean v0.0.0-20240404185305-c534a00030bd
+	github.com/merliot/device v0.0.0-20240406040135-6be289df02aa
 )
 
 require (

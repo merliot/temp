@@ -56,6 +56,7 @@ func (t *Temp) Subscribers() dean.Subscribers {
 }
 
 func (t *Temp) parseParams() {
+	t.Dht.Sensor = t.ParamFirstValue("sensor")
 	t.Dht.Gpio = t.ParamFirstValue("gpio")
 	t.Dht.Configure()
 }

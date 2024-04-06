@@ -1,0 +1,25 @@
+<hr>
+<div class="divFlexRow">
+	<div class="divFlexCol" id="sensordiv">
+		<span>Sensor</span>
+		<label>
+			<input type="radio" name="sensor" value="DHT11" checked>
+			DHT11
+		</label>
+
+		<label>
+			<input type="radio" name="sensor" value="DHT22">
+			DHT22
+		</label>
+	</div>
+
+	<div class="divFlexCol">
+		<span>GPIO Input</span>
+		<select class="gpio-selector" name="gpio"></select>
+	</div>
+</div>
+
+<script src="js/deployTargetGpios.js"></script>
+<script src="js/download-gpio.js"></script>
+<script src="js/download-device.js"></script>
+

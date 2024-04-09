@@ -103,10 +103,13 @@ class Temp extends WebSocketController {
 		this.chart.data.datasets[0].data = Array(60).fill(null)
 		this.chart.data.datasets[1].data = Array(60).fill(null)
 
-		for (let i = 0; i < this.state.History.length; i++) {
-			let rec = this.state.History[i]
-			this.chart.data.datasets[0].data[60 - i] = rec[0]
-			this.chart.data.datasets[1].data[60 - i] = rec[1]
+		let history = this.state.History
+		let len = history.length
+
+		for (let i = 0; i < len; i++) {
+			let rec = history[i]
+			this.chart.data.datasets[0].data[60 - len + i] = rec[0]
+			this.chart.data.datasets[1].data[60 - len + i] = rec[1]
 		}
 
 		this.chart.update()
@@ -123,10 +126,10 @@ class Temp extends WebSocketController {
 	updateHistory() {
 		var history = this.state.History
 		let dht = this.state.Dht
-		if (history.length > 60) {
-			history.pop()
+		if (history.length === 60) {
+			history.shift()
 		}
-		history.unshift([dht.Temperature, dht.Humidity])
+		history.push([dht.Temperature, dht.Humidity])
 	}
 
 	update(msg) {

@@ -27,7 +27,7 @@ type MsgUpdate struct {
 }
 
 func New(id, model, name string) dean.Thinger {
-	fmt.Println("NEW TEMP")
+	fmt.Println("NEW TEMP\r")
 	return &Temp{
 		Device:  device.New(id, model, name, fs, targets).(*device.Device),
 		History: []Record{},
@@ -100,12 +100,8 @@ func (t *Temp) minute(i *dean.Injector) {
 }
 
 func (t *Temp) Run(i *dean.Injector) {
-	ticker := time.NewTicker(time.Minute)
-	t.minute(i)
 	for {
-		select {
-		case <-ticker.C:
-			t.minute(i)
-		}
+		t.minute(i)
+		time.Sleep(60 * time.Second)
 	}
 }

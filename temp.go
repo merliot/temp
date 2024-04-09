@@ -12,10 +12,12 @@ import (
 
 var targets = []string{"demo", "nano-rp2040", "wioterminal"}
 
+type Record [2]float32
+
 type Temp struct {
 	*device.Device
 	Dht     dht.Dht
-	prevDht dht.Dht
+	History []Record
 }
 
 type MsgUpdate struct {
@@ -27,7 +29,8 @@ type MsgUpdate struct {
 func New(id, model, name string) dean.Thinger {
 	fmt.Println("NEW TEMP")
 	return &Temp{
-		Device: device.New(id, model, name, fs, targets).(*device.Device),
+		Device:  device.New(id, model, name, fs, targets).(*device.Device),
+		History: []Record{},
 	}
 }
 
@@ -44,8 +47,19 @@ func (t *Temp) getState(msg *dean.Msg) {
 	msg.Marshal(t).Reply()
 }
 
+func (t *Temp) addRecord() {
+	if len(t.History) >= 60 {
+		// Remove the oldest
+		t.History = t.History[1:]
+	}
+	// Add the new
+	r := Record{t.Dht.Temperature, t.Dht.Humidity}
+	t.History = append(t.History, r)
+}
+
 func (t *Temp) update(msg *dean.Msg) {
 	msg.Unmarshal(&t.Dht).Broadcast()
+	t.addRecord()
 }
 
 func (t *Temp) Subscribers() dean.Subscribers {
@@ -67,10 +81,9 @@ func (t *Temp) Setup() {
 	t.parseParams()
 }
 
-func (t *Temp) run(i *dean.Injector) {
+func (t *Temp) minute(i *dean.Injector) {
 	var msg dean.Msg
 	var d = &t.Dht
-	var prev = &t.prevDht
 
 	err := d.Read()
 	if err != nil {
@@ -78,23 +91,21 @@ func (t *Temp) run(i *dean.Injector) {
 		return
 	}
 
-	if d.Temperature != prev.Temperature ||
-		d.Humidity != prev.Humidity {
-		var update = MsgUpdate{
-			Path:        "update",
-			Temperature: d.Temperature,
-			Humidity:    d.Humidity,
-		}
-		i.Inject(msg.Marshal(update))
-		prev.Temperature = d.Temperature
-		prev.Humidity = d.Humidity
+	var update = MsgUpdate{
+		Path:        "update",
+		Temperature: d.Temperature,
+		Humidity:    d.Humidity,
 	}
+	i.Inject(msg.Marshal(update))
 }
 
 func (t *Temp) Run(i *dean.Injector) {
+	ticker := time.NewTicker(time.Minute)
+	t.minute(i)
 	for {
-		t.run(i)
-		// limit reads to every 2 seconds
-		time.Sleep(2 * time.Second)
+		select {
+		case <-ticker.C:
+			t.minute(i)
+		}
 	}
 }

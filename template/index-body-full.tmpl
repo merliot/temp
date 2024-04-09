@@ -1,9 +1,11 @@
+			<script src="js/chart.min.js"></script>
+
 			<div class="panel divFlexRow readings">
 				<div class="divFlexCol box">
 					<span>temp</span>
 					<div class="divFlexRow reading">
 						<span id="temp">__._</span>
-						<span>&deg;F</span>
+						<span>&deg;C</span>
 					</div>
 				</div>
 				<div class="divFlexCol box">
@@ -13,4 +15,8 @@
 						<span>%</span>
 					</div>
 				</div>
+			</div>
+
+			<div class="panel chart">
+				<canvas id="chartCanvas"></canvas>
 			</div>

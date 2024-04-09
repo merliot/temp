@@ -34,3 +34,7 @@
 .tile-body {
 	background: #e9e9af;
 }
+
+.chart {
+	height: 300px;
+}

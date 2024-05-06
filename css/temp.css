@@ -1,40 +1,40 @@
-.readings {
+.model-temp .readings {
 	justify-content: space-evenly;
 }
 
-.tile .readings {
+.model-temp .tile .readings {
 	font-size: small;
 }
 
-.reading {
+.model-temp .reading {
 	align-items: baseline;
 }
 
-#temp,#hum {
+.model-temp #temp,#hum {
 	font-size: xxx-large;
 }
 
-.tile #temp, .tile #hum {
+.model-temp .tile #temp, .tile #hum {
 	font-size: xx-large;
 }
 
-.box {
+.model-temp .box {
 	border-radius: 10px;
 	padding: 10px;
 	background: #e9e9af;
 	border-style: inset;
 }
 
-.tile .box {
+.model-temp .tile .box {
 	background: transparent;
 	border-style: none;
 	justify-content: space-between;
 }
 
-.tile-body {
+.model-temp .tile-body {
 	background: #e9e9af;
 }
 
-.chart {
+.model-temp .chart {
 	height: 300px;
 }

@@ -38,13 +38,13 @@ func (t *Temp) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.API(w, r, t)
 }
 
-func (t *Temp) save(msg *dean.Msg) {
-	msg.Unmarshal(t).Broadcast()
+func (t *Temp) save(pkt *dean.Packet) {
+	pkt.Unmarshal(t).Broadcast()
 }
 
-func (t *Temp) getState(msg *dean.Msg) {
+func (t *Temp) getState(pkt *dean.Packet) {
 	t.Path = "state"
-	msg.Marshal(t).Reply()
+	pkt.Marshal(t).Reply()
 }
 
 func (t *Temp) addRecord() {
@@ -57,8 +57,8 @@ func (t *Temp) addRecord() {
 	t.History = append(t.History, r)
 }
 
-func (t *Temp) update(msg *dean.Msg) {
-	msg.Unmarshal(&t.Dht).Broadcast()
+func (t *Temp) update(pkt *dean.Packet) {
+	pkt.Unmarshal(&t.Dht).Broadcast()
 	t.addRecord()
 }
 
@@ -82,7 +82,7 @@ func (t *Temp) Setup() {
 }
 
 func (t *Temp) minute(i *dean.Injector) {
-	var msg dean.Msg
+	var pkt dean.Packet
 	var d = &t.Dht
 
 	err := d.Read()
@@ -96,7 +96,7 @@ func (t *Temp) minute(i *dean.Injector) {
 		Temperature: d.Temperature,
 		Humidity:    d.Humidity,
 	}
-	i.Inject(msg.Marshal(update))
+	i.Inject(pkt.Marshal(update))
 }
 
 func (t *Temp) Run(i *dean.Injector) {
